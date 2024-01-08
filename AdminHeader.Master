@@ -1,0 +1,52 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="AdminHeader.master.cs" Inherits="TechTudo.AdminHeader" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>AdminPanel</title>
+    <script src="https://kit.fontawesome.com/6fac992168.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/admin_style.css">
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <header class="header">
+
+                <div class="flex">
+                    <a href="homePage.aspx" style="font-size: x-large; color: #f0d4e875;">&leftarrow; Store Page</a>
+                    <a href="adminPage.aspx" class="logo_title">Admin<span>Panel</span></a>
+
+                    <nav class="navbar">
+                        <a href="adminPage.aspx">home</a>
+                        <a href="adminProducts.aspx">products</a>
+                        <a href="admin_Orders.aspx">orders</a>
+                        <a href="adminUtilizadores.aspx">users</a>
+                    </nav>
+
+                    <div class="icons">
+                        <div id="menu-btn" class="fas fa-bars"></div>
+                        <div id="user-btn" class="fas fa-user"></div>
+                    </div>
+
+                    <div class="account-box">
+                        <p>Username : <span><asp:Label ID="lbl_nome" runat="server" Text=""></asp:Label></span></p>
+                        <p>Email : <span><asp:Label ID="lbl_email" runat="server" Text=""></asp:Label></span></p>
+                        <asp:Button ID="btn_logout" class="delete-btn" runat="server" Text="Terminar Sessão" OnClick="btn_logout_Click"/>
+                    </div>
+
+                </div>
+
+            </header>
+
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+
+        </div>
+    </form>
+</body>
+</html>

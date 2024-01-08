@@ -1,0 +1,294 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="PagesTemplate.master.cs" Inherits="TechTudo.PagesTemplate" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>- TechTudo -</title>
+    <script src="https://kit.fontawesome.com/6fac992168.js" crossorigin="anonymous"></script>
+    <link href="/css/styles.css" rel="stylesheet">
+    <link href="/css/public.css" rel="stylesheet">
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <header>
+            <div class="menu">
+                <div class="title">MENU</div>
+
+                <a href="homePage.aspx">
+                    <img src="/img/logo1.png" class="logo">
+                </a>
+
+                <ul class="nav">
+                    <li><a href="homePage.aspx"><i class="fa-solid fa-house"></i> Home</a></li>
+                    <li><a href="newsPage.aspx"><i class="fa-regular fa-newspaper"></i> Noticias</a></li>
+                    <li><a href="explorePage.aspx?filter=PCs"><i class="fa-solid fa-computer"></i> Computadores</a></li>
+                    <li>
+                        <nav class="componentes-drop">
+                            <input id="toggle" type="checkbox" checked>
+                            <h2><i class="fa-solid fa-microchip"></i> Componentes  &dtrif;</h2>
+                            <ul>
+                                <li><a href="explorePage.aspx?filter=CPU">Processadores</a></li>
+                                <li><a href="explorePage.aspx?filter=GPU">Placas Graficas</a></li>
+                                <li><a href="explorePage.aspx?filter=RAM">Memorias Ram</a></li>
+                                <li><a href="explorePage.aspx?filter=MotherBoard">MotherBoard</a></li>
+                                <li><a href="explorePage.aspx?filter=Fonte">Fontes</a></li>
+                                <li><a href="explorePage.aspx?filter=SSD">SSD's</a></li>
+                            </ul>
+                        </nav>
+                    </li>
+                    <li><a href="explorePage.aspx?filter=all"><i class="fa-solid fa-display"></i> Imagem</a></li>
+                    <li><a href="explorePage.aspx?filter=all"><i class="fa-solid fa-headphones-simple"></i> Som</a></li>
+                    <li><a href="explorePage.aspx?filter=all"><i class="fa-solid fa-computer-mouse"></i> Periféricos</a></li>
+                    <li><a href="aboutUs.aspx"><i class="fa-solid fa-circle-info"></i> Sobre Nos</a></li>
+                </ul>
+            </div>
+
+            <section class="nav_bar">
+                <div onsubmit="event.preventDefault();" role="search" class="search_bar">
+                    <input id="search" type="search" placeholder="Search..." />
+                    <button type="button" id="searchButton" onclick="search_name()">Go</button>
+                </div>
+
+                <div class="buttons">
+                    <a href="#" class="favorite" id="mostrarPainel">
+                        <i class="fa-regular fa-star fa-xl"></i>
+                    </a>
+
+                    <a href="javascript:void(0);" onclick="window.location.href='cartPage.aspx'" class="shop_car">
+                        <i class="fa-solid fa-cart-shopping fa-xl"></i>
+                    </a>
+
+                    <% if (TechTudo.globalClass.cod_user != null){ %>
+
+                    <!-- Caso se estiver logado -->
+                    
+                        <% if (TechTudo.globalClass.type_user == "Admin"){ %>
+
+                            <a href="adminPage.aspx" class="user_page">
+                                <i class="fa-solid fa-circle-user fa-xl"></i>
+                            </a>
+
+                        <% } else { %>
+
+                            <a href="userPage.aspx" class="user_page">
+                                <i class="fa-solid fa-circle-user fa-xl"></i>
+                            </a>
+
+                        <% } %>
+
+                    <% } else { %>
+
+                    <!-- Caso se estiver nao logado -->
+                    <button id="toggleButton" type="button" class="btn_entrar">Entrar</button>
+
+                    <div id="myDiv" class="login_container">
+                        <h3>Login Here</h3>
+
+                        <!-- <label for="username">Email</label> -->
+                        
+                        <asp:TextBox ID="tb_email" CssClass="tb" placeholder="Email" runat="server"></asp:TextBox>
+
+                        <!-- <label for="password">Password</label> -->
+                        
+                        <asp:TextBox ID="tb_pass" CssClass="tb" placeholder="Password" type="password" runat="server"></asp:TextBox>
+                        <div class="logins">
+                            <asp:Button ID="btn_login" CssClass="header_login" runat="server" Text="Log In" OnClick="btn_login_Click"/>
+                            <%--<div class="go">
+                                <img src="/img/google.png">
+                            </div>--%>
+                        </div>
+
+                        <div class="signIn_box">
+                            <p>Ainda não tem conta no nosso site?</p>
+                            
+                            <asp:Button ID="btn_createAccount" CssClass="btn" runat="server" Text="Criar Conta" OnClick="btn_createAccount_Click"/>
+                        </div>
+                    </div>
+
+                    <% } %>
+                </div>
+            </section>
+
+            <div class="separator"></div>
+
+
+
+            <div id="painelLateral">
+                <div class="header-panel">
+                    <i class="fa-solid fa-xmark" id="fecharPainel"></i>
+                    <h1>Favoritos</h1>
+                </div>
+
+                <%--<div class="product-cont">
+                    <img src="/img/cpu.jpeg">
+                    <div class="product-info">
+                        <div class="product-title-fav">
+                           <a href="#"><h2>Ryzen 5 5600XRyzen 5 5600XRyzen 5 5600XRyzen 5 5600X</h2></a> 
+                        </div>
+
+                        <div style="display: flex; margin-top: 4%;">
+                            <span class="product-price-fav">USD<b>23,453</b>
+                            </span>
+                            <div class="wcf-right">
+                                <a href="#" class="buy-btn-fav">
+                                    <i class="fa-solid fa-cart-shopping fa-xl"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>--%>
+
+                <%if (TechTudo.globalClass.cod_user != null)
+                    {  %>
+
+
+                <asp:Repeater ID="rpt_favoritos" runat="server">
+                    <ItemTemplate>
+
+                        <div class="product-cont">
+                            <asp:Image ID="Image1" runat="server" ImageUrl='<%# Eval("img_principal") != null ? "data:image/jpeg;base64," + Convert.ToBase64String((byte[])Eval("img_principal")) : "/img/default.png" %>' />
+                            <div class="product-info">
+                                <div class="product-title-fav">
+                                    <a href="productPage.aspx?product='<%# Eval("cod_produto") %>'">
+                                        <h2><%# Eval("nome_produto") %></h2>
+                                    </a>
+                                </div>
+
+                                <div style="display: flex; margin-top: 4%; justify-content: end; padding-right: 20px;">
+                                    <span class="product-price-fav"><b><%# Eval("price") %></b>€</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </ItemTemplate>
+                </asp:Repeater>
+
+                <% }
+                    else
+                    { %>
+                <div class="info-log">
+                    <h1>Por Favor, faça <a href="sighIn.aspx">Login</a></h1>
+                </div>
+                <% } %>
+            </div>
+
+
+        </header>
+
+
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+
+        
+
+
+        <footer>
+
+            <div class="footer-left">
+
+                <h3>Tech<span>TUDO</span></h3>
+
+                <p class="footer-links">
+                    <a href="homePage.aspx" class="link-1">Home</a>
+
+                    <a href="explorePage.aspx?filter=all">Produtos</a>
+
+                    <a href="aboutUs.aspx">About</a>
+
+                </p>
+
+                <p class="footer-company-name">Company Name © 2015</p>
+            </div>
+
+            <div class="footer-center">
+
+                <div>
+                    <i class="fa fa-map-marker"></i>
+                    <p><span>Atec Palmela</span> Quinta da Marqueza</p>
+                </div>
+
+                <div>
+                    <i class="fa fa-phone"></i>
+                    <p>+351 999 999 999</p>
+                </div>
+
+                <div>
+                    <i class="fa fa-envelope"></i>
+                    <p><a href="mailto:support@company.com">techtudo@gmail.com</a></p>
+                </div>
+
+            </div>
+
+            <div class="footer-right">
+
+                <p class="footer-company-about">
+                    <span>About the company</span>
+                    Lorem ipsum dolor sit amet, consectateur adispicing elit. Fusce euismod convallis velit, eu auctor lacus vehicula sit amet.
+                </p>
+
+                <div class="footer-icons">
+
+                    <a href="#"><i class="fa fa-facebook"></i></a>
+                    <a href="#"><i class="fa fa-twitter"></i></a>
+                    <a href="#"><i class="fa fa-linkedin"></i></a>
+                    <a href="#"><i class="fa fa-github"></i></a>
+
+                </div>
+
+            </div>
+
+        </footer>
+
+
+        <script src="/js/script.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const mostrarPainelBtn = document.getElementById("mostrarPainel");
+                const fecharPainelBtn = document.getElementById("fecharPainel");
+                const painelLateral = document.getElementById("painelLateral");
+
+                mostrarPainelBtn.addEventListener("click", function () {
+                    painelLateral.style.right = "0";
+                });
+
+                fecharPainelBtn.addEventListener("click", function () {
+                    painelLateral.style.right = "-30%";
+                });
+            });
+
+
+            function search_name() {
+                // Obter o valor da caixa de texto
+                var searchText = document.getElementById("search").value;
+
+                // Verificar se o texto não está vazio
+                if (searchText.trim() !== "") {
+                    // Redirecionar para uma nova página com o texto da caixa de texto como parâmetro
+                    window.location.href = "explorePage.aspx?produto=" + encodeURIComponent(searchText);
+                }
+            }
+        </script>
+    </form>
+
+
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/655ebd72d600b968d31624b8/1hft181t5';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
+
+
+</body>
+</html>
